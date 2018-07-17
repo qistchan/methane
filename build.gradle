@@ -1,0 +1,83 @@
+group 'com.bitmoe.osp'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven {
+        url 'http://nas.qistchan.com:8081/repository/maven-public/'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // https://mvnrepository.com/artifact/commons-logging/commons-logging
+    compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
+    // https://mvnrepository.com/artifact/org.dom4j/dom4j
+    compile group: 'org.dom4j', name: 'dom4j', version: '2.1.1'
+
+}
+
+mainClassName = "com.bitmoe.osp.qistchan.methane.Main"
+
+
+def getVersion(){
+    Properties versionProps = new Properties()
+    File versionPropsFile = new File('version.properties')
+    versionProps.load(versionPropsFile.newDataInputStream())
+    def runTasks = gradle.startParameter.taskNames
+    if ('release' in runTasks) {
+        versionProps.getProperty('MajorVersion') + '.' + versionProps.getProperty('MinorVersion') + '.' + versionProps.getProperty('PatchVersion') + '.' + versionProps.getProperty('BuildVersion') + '_RELEASED'
+    } else if('debug' in runTasks) {
+        versionProps.getProperty('MajorVersion') + '.' + versionProps.getProperty('MinorVersion') + '.' + versionProps.getProperty('PatchVersion') + '.' + versionProps.getProperty('BuildVersion') + '_' + versionProps.getProperty('DevStatus') + versionProps.getProperty('DevVersion')
+    }
+}
+
+def upgradeBuildVersion(){
+    Properties versionProps = new Properties()
+    File versionPropsFile = new File('version.properties')
+    versionProps.load(versionPropsFile.newDataInputStream())
+    String bVersion = String.format("%05d", versionProps.getProperty('BuildVersion').toInteger() + 1)
+    versionProps.setProperty('BuildVersion', bVersion)
+    versionProps.store(versionPropsFile.newWriter(), null)
+}
+
+jar {
+    configurations.runtime.each { println it.path }
+    println "========="
+    configurations.compile.each { println it.path }
+    println "========="
+
+    from {
+        //添加依懒到打包文件
+        //configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtime.collect{zipTree(it)}
+    }
+    manifest {
+        attributes 'Main-Class': 'com.bitmoe.osp.qistchan.methane.Main'
+    }
+}
+
+task clearJar(type: Delete) {
+    delete 'build/libs/lib'
+}
+
+task copyJar(type: Copy) {
+    from configurations.runtime
+    into('build/libs/lib')
+}
+
+project.afterEvaluate {
+    def runTasks = gradle.startParameter.taskNames
+    if ('release' in runTasks) {
+        upgradeBuildVersion()
+    }
+    version getVersion()
+}
+
+task release(type: Copy, dependsOn: [build, clearJar, copyJar])
+task debug(type: Copy, dependsOn: [build, clearJar, copyJar])
+
