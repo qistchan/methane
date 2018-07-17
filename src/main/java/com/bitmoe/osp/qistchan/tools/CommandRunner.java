@@ -15,18 +15,10 @@
  *
  */
 
-package com.bitmoe.osp.qistchan.methane;
-import org.apache.commons.logging.*;
-import com.bitmoe.osp.qistchan.tools.CommandRunner;
+package com.bitmoe.osp.qistchan.tools;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.print("Hello");
-        log.info("INFO");
-        CommandRunner commandRunner = new CommandRunner();
-        commandRunner.runner();
+public class CommandRunner {
+    public void runner(){
+        System.out.println("Package 2");
     }
-
-    private static Log log = LogFactory.getLog(Main.class);
-
 }

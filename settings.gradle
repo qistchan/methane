@@ -1,2 +1,4 @@
 rootProject.name = 'GroupLocalizeForTC11'
+include 'CommandRunner'
+findProject(':CommandRunner')?.name = 'commandrunner'
 
