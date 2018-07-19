@@ -46,18 +46,9 @@ def upgradeBuildVersion(){
 }
 
 jar {
-    configurations.runtime.each { println it.path }
-    println "========="
-    configurations.compile.each { println it.path }
-    println "========="
-
-    from {
-        //添加依懒到打包文件
-        //configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-        configurations.runtime.collect{zipTree(it)}
-    }
     manifest {
         attributes 'Main-Class': 'com.bitmoe.osp.qistchan.methane.Main'
+        attributes 'Class-Path': ". lib/" +configurations.runtime.collect{ it.name }.join(' lib/')
     }
 }
 

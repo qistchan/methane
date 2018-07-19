@@ -17,8 +17,34 @@
 
 package com.bitmoe.osp.qistchan.tools;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommandRunner {
-    public void runner(){
-        System.out.println("Package 2");
+    private String command;
+    private String charSet;
+
+    public void setCommand(String cmd){
+        this.command = cmd;
+    }
+    public void setCharSet(String charSets) { this.charSet = charSets; }
+
+    public List<String> run() {
+        String screenLine;
+        List<String> screenLines = new ArrayList<>();
+        try {
+            Process process = Runtime.getRuntime().exec(this.command);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream(), Charset.forName(this.charSet)));
+            while ((screenLine = bufferedReader.readLine()) != null)
+                screenLines.add(screenLine);
+            process.waitFor();
+            return screenLines;
+        } catch (Exception e){
+            System.err.println(e);
+            return null;
+        }
     }
 }

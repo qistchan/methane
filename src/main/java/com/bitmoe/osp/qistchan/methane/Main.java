@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Bitmoe Inc.
+ * Copyright (c) 2018 BitMOE Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,17 +16,26 @@
  */
 
 package com.bitmoe.osp.qistchan.methane;
-import org.apache.commons.logging.*;
-import com.bitmoe.osp.qistchan.tools.CommandRunner;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.print("Hello");
-        log.info("INFO");
-        CommandRunner commandRunner = new CommandRunner();
-        commandRunner.runner();
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+
+        Parent root = FXMLLoader.load(getClass().getResource("/View.fxml"));
+        primaryStage.setTitle("Group Localize For Teamcenter");
+        primaryStage.setScene(new Scene(root, 700, 455));
+        primaryStage.show();
     }
 
-    private static Log log = LogFactory.getLog(Main.class);
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
