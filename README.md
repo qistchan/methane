@@ -2,7 +2,6 @@
 
 ### Build Status:
 
-[![Build Status](http://nas.qistchan.com:30000/qistchan/MethLocalizeFX/badges/dev-0.1/build.svg)]()
 
 
 ### Introduction
