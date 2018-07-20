@@ -2,6 +2,7 @@
 
 ### Build Status:
 
+[![Build Status](http://nas.qistchan.com:30000/qistchan/Methane/badges/master/build.svg)](http://nas.qistchan.com:30000/qistchan/Methane/pipelines)
 
 ### Introduction
 
