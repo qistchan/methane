@@ -2,7 +2,6 @@
 
 ### Build Status:
 
-!
 
 ### Introduction
 
