@@ -16,7 +16,7 @@ before_script:
 
 build:
   stage: build
-  script: gradle release && mvn deploy:deploy-file -DgroupId=com.birmoe.osp -DartifactId=grouplocalzie -Dversion=0.0.1_a1 -Dpackaging=jar -Dfile=build/libs/GroupLocalizeForTC11-0.0.1.00018_RELEASED.jar -Durl=http://nas.qistchan.com:8081/repository/docker-hosted/ -DrepositoryId=Hamster-nexus3
+  script: gradle release
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
