@@ -16,7 +16,7 @@ before_script:
 
 build:
   stage: build
-  script: gradle release && ls build
+  script: gradle release && ls build/libs
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
